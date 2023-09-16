@@ -1,16 +1,29 @@
-import './ExpenseItems.css';
-import ExpenseDate from './ExpenseDate'; // Import ExpenseDate
-import ExpenseDetails from './ExpenseDetails'; // Import ExpenseDetails
+import React, { useState } from 'react';
+import '../Expense/ExpenseItems.css';
+import ExpenseDate from '../Expense/ExpenseDate';
+import ExpenseDetails from '../Expense/ExpenseDetails';
 
 function ExpenseItem(props) {
+  const [isDeleted, setIsDeleted] = useState(false);
+
+  const handleDeleteClick = () => {
+    setIsDeleted(true);
+  };
+  if (isDeleted) {
+    return null; 
+  }
+
   return (
-    <div className='expense-item'>
-      <ExpenseDate date={props.date} /> {/* Display the date using ExpenseDate */}
+    <div className={`expense-item ${isDeleted ? 'deleted' : ''}`}>
+      <ExpenseDate date={props.date} />
       <ExpenseDetails
         title={props.title}
         amount={props.amount}
         location={props.location}
-      /> {/* Display the details using ExpenseDetails */}
+      />
+      {!isDeleted && (
+        <button onClick={handleDeleteClick}>Delete Expense</button>
+      )}
     </div>
   );
 }
