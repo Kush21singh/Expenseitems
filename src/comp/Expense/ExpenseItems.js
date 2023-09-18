@@ -3,27 +3,31 @@ import '../Expense/ExpenseItems.css';
 import ExpenseDate from '../Expense/ExpenseDate';
 import ExpenseDetails from '../Expense/ExpenseDetails';
 
-function ExpenseItem(props) {
-  const [isDeleted, setIsDeleted] = useState(false);
+const ExpenseItem = (props) => {
 
-  const handleDeleteClick = () => {
-    setIsDeleted(true);
-  };
-  if (isDeleted) {
-    return null; 
-  }
+    const [title, setTitle] = useState(props.title);
+    const [amount, setAmount] = useState(props.amount); // Add state for amount
+    console.log('ExpenseItem evaluated by React');
 
-  return (
-    <div className={`expense-item ${isDeleted ? 'deleted' : ''}`}>
-      <ExpenseDate date={props.date} />
-      <ExpenseDetails
-        title={props.title}
-        amount={props.amount}
-        location={props.location}
-      />
-      {!isDeleted && (
-        <button onClick={handleDeleteClick}>Delete Expense</button>
-      )}
+    const clickHandler = ()  => {
+        setTitle('Updated!');
+        console.log(title);    
+    };
+
+    const changeAmountHandler = () => {
+        setAmount(100); // Change the expense amount to $100
+    };
+
+    return (
+        <div className='expense-item'>
+          <ExpenseDate date={props.date} /> 
+          <ExpenseDetails
+            title={props.title}
+            amount={amount} 
+            location={props.location}
+          /> 
+        <button onClick={clickHandler}>Change Title</button>
+        <button onClick={changeAmountHandler}>Change Amount to $100</button> 
     </div>
   );
 }
